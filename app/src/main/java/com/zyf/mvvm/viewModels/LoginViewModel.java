@@ -1,16 +1,28 @@
 package com.zyf.mvvm.viewModels;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.databinding.ActivityLoginBinding;
 import com.zyf.mvvm.views.LoginActivity;
+
+import java.util.List;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * Created by zyf on 2017/3/17.
@@ -98,6 +110,51 @@ public class LoginViewModel extends BaseObservable {
         //TODO: Replace this with your own logic
         return password.length() > 4;
     }
+
+
+    public void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(mView,
+                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+
+        mBinding.email.setAdapter(adapter);
+    }
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = mView.getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mBinding.loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
+            mBinding.loginForm.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mBinding.loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mBinding.loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
+            mBinding.loginProgress.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mBinding.loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mBinding.loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
+            mBinding.loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the mainViewModel.
@@ -138,20 +195,20 @@ public class LoginViewModel extends BaseObservable {
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-//            showProgress(false);
-//
-//            if (success) {
-//                finish();
-//            } else {
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
-//            }
+            showProgress(false);
+
+            if (success) {
+                ((Activity)mView).finish();
+            } else {
+                mBinding.password.setError(mView.getString(R.string.error_incorrect_password));
+                mBinding.password.requestFocus();
+            }
         }
 
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            //showProgress(false);
+            showProgress(false);
         }
     }
 }
