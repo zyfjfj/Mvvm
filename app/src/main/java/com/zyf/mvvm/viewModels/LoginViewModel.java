@@ -5,22 +5,29 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
+import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.databinding.ActivityLoginBinding;
+import com.zyf.mvvm.utils.TextWatcherAdapter;
 import com.zyf.mvvm.views.LoginActivity;
+import com.zyf.mvvm.views.MainActivity;
 
 import java.util.List;
+import java.util.Objects;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -38,12 +45,17 @@ public class LoginViewModel extends BaseObservable {
     };
     public final ObservableField<String> mEmail=new ObservableField<>();
     public final ObservableField<String> mPassword=new ObservableField<>();
+    public final ObservableField<String> emailError=new ObservableField<>();
+    public final ObservableField<String> pwError=new ObservableField<>();
     private Context mView;
     private ActivityLoginBinding mBinding;
     public LoginViewModel(Context view, ActivityLoginBinding binding) {
         this.mView = view;
         this.mBinding=binding;
     }
+    //public TextWatcherAdapter emailWatcher = new TextWatcherAdapter(mEmail);
+    //public TextWatcherAdapter pwWatcher = new TextWatcherAdapter(mPassword);
+    // android:addTextChangedListener="@{loginViewModel.emailWatcher}"
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -65,25 +77,25 @@ public class LoginViewModel extends BaseObservable {
         }
 
         // Store values at the time of the login attempt.
-        String email = mEmail.get();
-        String password = mPassword.get();
+        String email = mEmail.get()==null?"":mEmail.get();
+        String password = mPassword.get()==null?"":mPassword.get();
 
         boolean cancel = false;
         View focusView = null;
         // Check for a valid password, if the mainViewModel entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mBinding.password.setError(mView.getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            pwError.set(mView.getString(R.string.error_invalid_password));
             focusView = mBinding.password;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mBinding.email.setError(mView.getString(R.string.error_field_required));
+            emailError.set(mView.getString(R.string.error_field_required));
             focusView = mBinding.email;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mBinding.email.setError(mView.getString(R.string.error_invalid_email));
+            emailError.set(mView.getString(R.string.error_invalid_email));
             focusView = mBinding.email;
             cancel = true;
         }
@@ -96,10 +108,10 @@ public class LoginViewModel extends BaseObservable {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the mainViewModel login attempt.
+            showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-        mPassword.set("没有密码");
     }
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -198,9 +210,12 @@ public class LoginViewModel extends BaseObservable {
             showProgress(false);
 
             if (success) {
-                ((Activity)mView).finish();
+                //((Activity)mView).finish();
+                Intent intent = new Intent();
+                intent.setClass(mView, MainActivity.class);
+                mView.startActivity(intent);
             } else {
-                mBinding.password.setError(mView.getString(R.string.error_incorrect_password));
+                pwError.set(mView.getString(R.string.error_incorrect_password));
                 mBinding.password.requestFocus();
             }
         }

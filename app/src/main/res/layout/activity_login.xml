@@ -1,10 +1,11 @@
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="loginViewModel"
             type="com.zyf.mvvm.viewModels.LoginViewModel"/>
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -45,7 +46,8 @@
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:text="@{loginViewModel.mEmail}"
+                    android:text="@={loginViewModel.mEmail}"
+                    android:error="@{loginViewModel.emailError}"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -64,7 +66,8 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:text="@{loginViewModel.mPassword}"
+                    android:text="@={loginViewModel.mPassword}"
+                    android:error="@{loginViewModel.pwError}"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
