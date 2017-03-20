@@ -81,7 +81,12 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
                 android:onClick="@{loginViewModel.onClick}"/>
-
+            android:onClick="@{loginViewModel.onClick}"/>
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mImage="@{loginViewModel.mImage}"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
