@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
+import android.databinding.BindingAdapter;
 import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
@@ -18,8 +19,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.databinding.ActivityLoginBinding;
 import com.zyf.mvvm.utils.TextWatcherAdapter;
@@ -47,6 +50,7 @@ public class LoginViewModel extends BaseObservable {
     public final ObservableField<String> mPassword=new ObservableField<>();
     public final ObservableField<String> emailError=new ObservableField<>();
     public final ObservableField<String> pwError=new ObservableField<>();
+    public ObservableField<String> mImage =new ObservableField<>();
     private Context mView;
     private ActivityLoginBinding mBinding;
     public LoginViewModel(Context view, ActivityLoginBinding binding) {
@@ -56,7 +60,10 @@ public class LoginViewModel extends BaseObservable {
     //public TextWatcherAdapter emailWatcher = new TextWatcherAdapter(mEmail);
     //public TextWatcherAdapter pwWatcher = new TextWatcherAdapter(mPassword);
     // android:addTextChangedListener="@{loginViewModel.emailWatcher}"
-
+    @BindingAdapter("mImage")
+    public static void getInternetImage(ImageView iv, String imageUrl) {
+        Picasso.with(iv.getContext()).load(imageUrl).into(iv);
+    }
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
