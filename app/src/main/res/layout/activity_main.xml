@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <variable name="mainViewModel" type="com.zyf.mvvm.viewModels.MainViewModel"/>
+
+        <variable
+            name="mainViewModel"
+            type="com.zyf.mvvm.viewModels.MainViewModel" />
     </data>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{mainViewModel.firstName}"/>
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{mainViewModel.lastName}"
-            android:onClick="@{mainViewModel.onClickFriend}"/>
-    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/background"
+        android:columnWidth="90dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
 </layout>
