@@ -19,4 +19,5 @@
     <string name="man">"男"</string>
     <string name="woman">"女"</string>
     <string name="title_activity_function">FunctionActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
