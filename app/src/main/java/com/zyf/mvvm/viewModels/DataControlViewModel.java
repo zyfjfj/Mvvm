@@ -42,7 +42,7 @@ public class DataControlViewModel extends BaseObservable {
                     Result<DatasWithPageInfo> testResultRespond= response.body();
                     if (testResultRespond != null) {
 
-                        testResults=testResultRespond.getData().Datamanagemodels;
+                        testResults=testResultRespond.Data.Datamanagemodels;
                         mHandler.sendEmptyMessage(0);
                     }
 

@@ -7,39 +7,13 @@ import java.util.List;
  */
 
 public class Result<T> extends PageInfo{
-    private boolean success;
-    private String Message;
-    private int count;
-    private T Data;
-    public boolean isSuccess() {
-        return success;
-    }
+    public boolean success;
+    public boolean Success;
+    public String Message;
+    public String message;
+    public int count;
+    public int Count;
+    public T Data;
+    public T data;
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return Message;
-    }
-
-    public void setMessage(String message) {
-        Message = message;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public T getData() {
-        return Data;
-    }
-
-    public void setData(T data) {
-        this.Data = data;
-    }
 }

@@ -4,13 +4,9 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.zyf.mvvm.GlobalParameterApplication;
-import com.zyf.mvvm.models.DatasWithPageInfo;
 import com.zyf.mvvm.models.ParInfoWithPageInfo;
-import com.zyf.mvvm.models.Particiant;
 import com.zyf.mvvm.models.Result;
-import com.zyf.mvvm.models.TestResult;
 import com.zyf.mvvm.net.ParInfoService;
-import com.zyf.mvvm.net.TestResultService;
 
 import java.util.List;
 
@@ -25,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ParInfoViewModel {
-    public List<Particiant> particiants;
+    public List<ParticiantItemViewModel> particiantItemViewModels;
 
     public void initData(final Handler mHandler) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -33,10 +29,10 @@ public class ParInfoViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ParInfoService service = retrofit.create(ParInfoService.class);
-        Particiant particiant=new Particiant();
-        particiant.pagesize=90;
-        particiant.curpage=1;
-        Call<Result<ParInfoWithPageInfo>> repos = service.listRepos(particiant);
+        ParticiantItemViewModel particiantItemViewModel =new ParticiantItemViewModel();
+        particiantItemViewModel.pagesize=90;
+        particiantItemViewModel.curpage=1;
+        Call<Result<ParInfoWithPageInfo>> repos = service.listRepos(particiantItemViewModel);
         repos.enqueue(new Callback<Result<ParInfoWithPageInfo>>() {
             @Override
             public void onResponse(Call<Result<ParInfoWithPageInfo>> call, Response<Result<ParInfoWithPageInfo>> response) {
@@ -44,7 +40,7 @@ public class ParInfoViewModel {
                     Result<ParInfoWithPageInfo> parInfoRespond= response.body();
                     if (parInfoRespond != null) {
 
-                        particiants=parInfoRespond.getData().Participants;
+                        particiantItemViewModels =parInfoRespond.Data.Participants;
                         mHandler.sendEmptyMessage(0);
                     }
 

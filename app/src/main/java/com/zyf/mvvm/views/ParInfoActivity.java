@@ -9,9 +9,7 @@ import android.widget.ListView;
 import com.zyf.mvvm.BR;
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.adapter.DataAdapter;
-import com.zyf.mvvm.models.PageInfo;
-import com.zyf.mvvm.models.ParInfoWithPageInfo;
-import com.zyf.mvvm.models.Particiant;
+import com.zyf.mvvm.viewModels.ParticiantItemViewModel;
 import com.zyf.mvvm.viewModels.ParInfoViewModel;
 
 public class ParInfoActivity extends AppCompatActivity {
@@ -32,8 +30,8 @@ public class ParInfoActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
 
-            DataAdapter<Particiant> adapter = new DataAdapter<>(ParInfoActivity.this, R.layout.par_info_item,
-                    parInfoViewModel.particiants, BR.particiant);
+            DataAdapter<ParticiantItemViewModel> adapter = new DataAdapter<>(ParInfoActivity.this, R.layout.par_info_item,
+                    parInfoViewModel.particiantItemViewModels, BR.particiantItemViewModel);
             lv.setAdapter(adapter);
         }
     };

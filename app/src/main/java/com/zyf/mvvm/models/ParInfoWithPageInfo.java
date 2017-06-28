@@ -1,5 +1,7 @@
 package com.zyf.mvvm.models;
 
+import com.zyf.mvvm.viewModels.ParticiantItemViewModel;
+
 import java.util.List;
 
 /**
@@ -8,5 +10,5 @@ import java.util.List;
 
 public class ParInfoWithPageInfo {
     public PageInfo Pageinfo;
-    public List<Particiant> Participants;
+    public List<ParticiantItemViewModel> Participants;
 }

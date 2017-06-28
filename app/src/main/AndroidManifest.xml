@@ -33,6 +33,10 @@
         <activity
             android:name=".views.ParInfoActivity"
             android:label="@string/title_activity_par_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.FunctionActivity"
+            android:label="@string/title_activity_function"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

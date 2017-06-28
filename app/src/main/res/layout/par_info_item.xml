@@ -2,32 +2,36 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
-            name="particiant"
-            type="com.zyf.mvvm.models.Particiant" />
+            name="particiantItemViewModel"
+            type="com.zyf.mvvm.viewModels.ParticiantItemViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="@{particiant.onItemClick}"
+        android:onClick="@{particiantItemViewModel.onItemClick}"
         android:orientation="horizontal">
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text='@{""+particiantItemViewModel.Id}' />-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@{particiantItemViewModel.Name}" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@{particiant.Name}" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@{String.valueOf(particiant.Sex)}" />
+            android:text='@{(particiantItemViewModel.Sex==1)?@string/man:@string/woman}'/>
         <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="@{particiant.KeyCode}" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="@{particiantItemViewModel.KeyCode}" />-->
     </LinearLayout>
 </layout>

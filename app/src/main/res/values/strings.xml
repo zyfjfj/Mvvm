@@ -16,4 +16,7 @@
     </string>
     <string name="title_activity_data_control">DataControlActivity</string>
     <string name="title_activity_par_info">ParInfoActivity</string>
+    <string name="man">"男"</string>
+    <string name="woman">"女"</string>
+    <string name="title_activity_function">FunctionActivity</string>
 </resources>
