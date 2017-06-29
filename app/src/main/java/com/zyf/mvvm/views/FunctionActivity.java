@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -25,12 +26,13 @@ public class FunctionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_function);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Bundle bundle = this.getIntent().getExtras();
         //接收name值
         final int particpantId = bundle.getInt("particpantId");
 
-        final FunctionViewModel functionViewModel=new FunctionViewModel();
+        final FunctionViewModel functionViewModel=new FunctionViewModel(mHandler);
         GridView gridview = (GridView) findViewById(R.id.functionGridView);
         int length = functionViewModel.imageRes.length;
 
@@ -57,10 +59,10 @@ public class FunctionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (functionViewModel.name[position]) {
                     case "图像高阶测评":
-                        functionViewModel.programControl(mHandler,5,particpantId);
+                        functionViewModel.programControl(5,particpantId);
                         break;
                     case "图像认知测评":
-                        functionViewModel.programControl(mHandler,1,particpantId);
+                        functionViewModel.programControl(1,particpantId);
                         break;
                 }
 

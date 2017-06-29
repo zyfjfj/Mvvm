@@ -12,6 +12,7 @@ import com.zyf.mvvm.views.FunctionActivity;
 import com.zyf.mvvm.views.MainActivity;
 import com.zyf.mvvm.views.ParInfoActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -31,7 +32,15 @@ public class ParticiantItemViewModel extends PageInfo {
     public String IsDose;
     public Date CreateTime ;
     public Date Birthday ;
+    public String BirthdayStr ;
     public String Birthcity ;
+
+    public String getBirthdayStr() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String t=format.format(Birthday);
+        return t;
+    }
+
     public String Currentcity ;
     public String IsLeft ;
     public String Dep;

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mvvm</string>
+    <string name="app_name">测评控制</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -14,10 +14,20 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_data_control">DataControlActivity</string>
-    <string name="title_activity_par_info">ParInfoActivity</string>
+    <string name="title_activity_data_control">数据管理</string>
+    <string name="title_activity_par_info">参与者信息</string>
     <string name="man">"男"</string>
     <string name="woman">"女"</string>
-    <string name="title_activity_function">FunctionActivity</string>
+    <string name="par_name">"姓名："</string>
+    <string name="par_age">"岁数："</string>
+    <string name="par_birthday">"生日："</string>
+    <string name="title_activity_function">选择测试项</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_input_infor">填写信息</string>
+
+    <string-array name="mainEvaluate">
+        <item>焦虑情绪</item>
+        <item>抑郁情绪</item>
+        <item>焦虑抑郁情绪</item>
+    </string-array>
 </resources>

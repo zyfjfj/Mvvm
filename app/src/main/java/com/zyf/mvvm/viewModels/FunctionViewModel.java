@@ -20,6 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FunctionViewModel {
+    final Handler handler;
+    public FunctionViewModel(Handler handler) {
+        this.handler = handler;
+    }
+
     //定义图标数组
     public int[] imageRes = {
             R.drawable.txrz,
@@ -37,7 +42,7 @@ public class FunctionViewModel {
      * @param functionId
      * @param particpantId
      */
-    public void programControl(final Handler handler, int functionId, int particpantId) {
+    public void programControl( int functionId, int particpantId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GlobalParameterApplication.BaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -67,6 +72,7 @@ public class FunctionViewModel {
 
             @Override
             public void onFailure(Call<Result<ProgramControl>> call, Throwable t) {
+                handler.sendEmptyMessage(2);
                 Log.e("===", "失败");
             }
         });

@@ -1,9 +1,16 @@
 package com.zyf.mvvm.views;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 
 import com.zyf.mvvm.BR;
@@ -20,13 +27,30 @@ public class ParInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_par_info);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        parInfoViewModel=new ParInfoViewModel();
-        lv=(ListView)findViewById(R.id.parInfoListView);
-        parInfoViewModel.initData(mHandler);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(view.getContext(), InputInforActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+        parInfoViewModel = new ParInfoViewModel();
+        lv = (ListView) findViewById(R.id.parInfoListView);
+        (new Thread(){
+            @Override
+            public void run() {
+                parInfoViewModel.initData(mHandler);
+            }
+        }).start();
+
     }
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 

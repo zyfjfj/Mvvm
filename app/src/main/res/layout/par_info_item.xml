@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="particiantItemViewModel"
             type="com.zyf.mvvm.viewModels.ParticiantItemViewModel" />
@@ -10,30 +11,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="@{particiantItemViewModel.onItemClick}"
         android:minHeight="40dp"
-        android:textSize="24sp"
-        android:orientation="horizontal">
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text='@{""+particiantItemViewModel.Id}' />-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@{particiantItemViewModel.Name}" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text='@{(particiantItemViewModel.Sex==1)?@string/man:@string/woman}'/>
+        android:onClick="@{particiantItemViewModel.onItemClick}"
+        android:orientation="horizontal"
+        android:textSize="24sp">
         <!--<TextView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:layout_weight="1"-->
-        <!--android:text="@{particiantItemViewModel.KeyCode}" />-->
+        <!--android:text='@{""+particiantItemViewModel.Id}' />-->
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:text="@{@string/par_name+particiantItemViewModel.Name}" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:text='@{(particiantItemViewModel.Sex==1)?@string/man:@string/woman}' />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@{@string/par_birthday+particiantItemViewModel.BirthdayStr}" />
     </LinearLayout>
 </layout>
