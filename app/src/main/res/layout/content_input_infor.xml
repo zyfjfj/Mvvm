@@ -1,96 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.zyf.mvvm.views.InputInforActivity"
-    tools:showIn="@layout/activity_input_infor">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_vertical_margin"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+    <data>
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="测试编号"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="16dp" />
+        <variable
+            name="particiant"
+            type="com.zyf.mvvm.viewModels.ParticiantItemViewModel" />
+    </data>
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:ems="10"
-            android:hint="姓名"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="82dp" />
+    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.zyf.mvvm.views.InputInforActivity"
+        tools:showIn="@layout/activity_input_infor">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:error="@{particiant.keyCodeError}"
+                    android:hint="测试编号"
+                    android:text="@={particiant.KeyCode}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:ems="10"
+                    android:error="@{particiant.nameError}"
+                    android:hint="姓名"
+                    android:text="@={particiant.Name}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="性别"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="男"></RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/radioFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="女"></RadioButton>
+                </RadioGroup>
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="年龄"
+                    android:inputType="phone"
+                    android:text="@={particiant.AgeStr}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="联系电话"
+                    android:inputType="phone"
+                    android:text="@={particiant.Phone}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinnerMainEvaluate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="性别"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioMale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="男"></RadioButton>
-
-                <RadioButton
-                    android:id="@+id/radioFemale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="女"></RadioButton>
-            </RadioGroup>
+                android:entries="@array/mainEvaluate" />
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="联系电话"
-            android:inputType="phone"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="211dp" />
-
-        <Spinner
-            android:id="@+id/spinnerMainEvaluate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/mainEvaluate" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:visibility="invisible" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:visibility="invisible" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="确定" />
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

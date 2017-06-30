@@ -32,7 +32,7 @@ public class ParInfoViewModel {
         ParticiantItemViewModel particiantItemViewModel =new ParticiantItemViewModel();
         particiantItemViewModel.pagesize=90;
         particiantItemViewModel.curpage=1;
-        Call<Result<ParInfoWithPageInfo>> repos = service.listRepos(particiantItemViewModel);
+        Call<Result<ParInfoWithPageInfo>> repos = service.pantinfos(particiantItemViewModel);
         repos.enqueue(new Callback<Result<ParInfoWithPageInfo>>() {
             @Override
             public void onResponse(Call<Result<ParInfoWithPageInfo>> call, Response<Result<ParInfoWithPageInfo>> response) {
