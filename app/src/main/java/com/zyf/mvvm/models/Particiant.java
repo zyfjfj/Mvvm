@@ -1,6 +1,5 @@
 package com.zyf.mvvm.models;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**

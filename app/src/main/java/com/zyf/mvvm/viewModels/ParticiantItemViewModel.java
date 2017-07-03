@@ -4,29 +4,23 @@ import android.content.Intent;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.AutoCompleteTextView;
 
 import com.zyf.mvvm.GlobalParameterApplication;
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.databinding.ActivityInputInforBinding;
-import com.zyf.mvvm.databinding.ContentInputInforBinding;
 import com.zyf.mvvm.models.PageInfo;
+import com.zyf.mvvm.models.Particiant;
 import com.zyf.mvvm.models.Result;
 import com.zyf.mvvm.net.ParInfoService;
-import com.zyf.mvvm.views.DataControlActivity;
 import com.zyf.mvvm.views.FunctionActivity;
 import com.zyf.mvvm.views.InputInforActivity;
-import com.zyf.mvvm.views.MainActivity;
-import com.zyf.mvvm.views.ParInfoActivity;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,52 +33,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ParticiantItemViewModel extends PageInfo {
-    public int Id;
-    public String Name;
-    public int Sex;
-    public int Age;
-    public String AgeStr;
-    public int EducationId;
-    public String Phone;
-    public int WorkId;
-    public int MaritalStatus;
-    public String KeyCode;
-    public String IsDose;
-    public Date CreateTime;
-    public Date Birthday;
-    public String BirthdayStr;
-    public String Birthcity;
+    public Particiant particiant;
     public ObservableField<String> keyCodeError=new ObservableField<>();
     public ObservableField<String> nameError=new ObservableField<>();
     public String getBirthdayStr() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(Birthday);
+        return new SimpleDateFormat("yyyy-MM-dd").format(particiant.Birthday);
     }
-
-    public String getAgeStr() {
-        if(Age==0) return "";
-        return Age+"";
-    }
-    public void setAgeStr(String ageStr) {
-        AgeStr=ageStr;
-        if(ageStr.equals("")) {
-            Age=0;
-            return;
-        }
-        Age=Integer.parseInt(ageStr);
-    }
-    public String Currentcity;
-    public String IsLeft;
-    public String Dep;
-    public String Enable;
+    public String KeyCode;
+    public String Name;
+    public String AgeStr;
+    public String Phone;
+//
+//    public void setAgeStr(String ageStr) {
+//        particiant.AgeStr=ageStr;
+//        if(ageStr.equals("")) {
+//            Age=0;
+//            return;
+//        }
+//        Age=Integer.parseInt(ageStr);
+//    }
     long[] mHits = new long[2];        //存储时间的数组
 
     public ParticiantItemViewModel() {
 
-    }
-
-    @Override
-    public String toString() {
-        return Name+","+KeyCode;
     }
 
     public ParticiantItemViewModel(InputInforActivity activity, ActivityInputInforBinding binding) {
@@ -107,12 +78,12 @@ public class ParticiantItemViewModel extends PageInfo {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 ParInfoService service = retrofit.create(ParInfoService.class);
-                Call<Result<ParticiantItemViewModel>> repos =service.addPantInfos(ParticiantItemViewModel.this);
-                repos.enqueue(new Callback<Result<ParticiantItemViewModel>>() {
+                Call<Result<Particiant>> repos =service.addPantInfos(particiant);
+                repos.enqueue(new Callback<Result<Particiant>>() {
                     @Override
-                    public void onResponse(Call<Result<ParticiantItemViewModel>> call, Response<Result<ParticiantItemViewModel>> response) {
+                    public void onResponse(Call<Result<Particiant>> call, Response<Result<Particiant>> response) {
                         try {
-                            Result<ParticiantItemViewModel> parInfoRespond= response.body();
+                            Result<Particiant> parInfoRespond= response.body();
                             if (parInfoRespond != null) {
 
                                 Log.i("===",parInfoRespond.Data.toString());
@@ -124,7 +95,7 @@ public class ParticiantItemViewModel extends PageInfo {
                     }
 
                     @Override
-                    public void onFailure(Call<Result<ParticiantItemViewModel>> call, Throwable t) {
+                    public void onFailure(Call<Result<Particiant>> call, Throwable t) {
                         Log.e("===", "失败");
                     }
                 });
@@ -143,11 +114,16 @@ public class ParticiantItemViewModel extends PageInfo {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
             //传递name参数为tinyphp
-            bundle.putInt("particpantId", Id);
+            bundle.putInt("particpantId", particiant.Id);
             intent.putExtras(bundle);
             intent.setClass(view.getContext(), FunctionActivity.class);
             view.getContext().startActivity(intent);
         }
+    }
+    //点击输入控件
+    public void onTextViewClick(View view){
+        AutoCompleteTextView s=(AutoCompleteTextView)view;
+        Log.i("===",s.getText().toString());
     }
 
 }

@@ -1,15 +1,10 @@
 package com.zyf.mvvm.models;
 
-import android.view.View;
-import android.widget.Toast;
-
-import java.util.Date;
-
 /**
  * Created by zyf on 2017/6/26.
  */
 
-public class TestResult extends PageInfo {
+public class AssessResult extends PageInfo {
     public int Id ;
     public int Partid ;
     public int Subjectid ;
@@ -32,8 +27,5 @@ public class TestResult extends PageInfo {
     public String name;
     public String Enable;
 
-    public void onItemClick(View view) {
-        Toast.makeText(view.getContext(),name, Toast.LENGTH_SHORT).show();
-    }
 
 }

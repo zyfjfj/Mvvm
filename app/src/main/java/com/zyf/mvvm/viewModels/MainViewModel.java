@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.zyf.mvvm.GlobalParameterApplication;
 import com.zyf.mvvm.models.Result;
 import com.zyf.mvvm.models.ScaleSubject;
-import com.zyf.mvvm.net.ParInfoService;
 import com.zyf.mvvm.net.ScaleSubjectService;
 
 import java.util.List;

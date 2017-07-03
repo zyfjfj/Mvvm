@@ -5,11 +5,12 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.zyf.mvvm.GlobalParameterApplication;
+import com.zyf.mvvm.models.AssessResult;
 import com.zyf.mvvm.models.DatasWithPageInfo;
 import com.zyf.mvvm.models.Result;
-import com.zyf.mvvm.models.TestResult;
-import com.zyf.mvvm.net.TestResultService;
+import com.zyf.mvvm.net.AssessResultService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,26 +24,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class DataControlViewModel extends BaseObservable {
-    public List<TestResult> testResults;
+    public List<DataItemViewModel> dataItemViewModels=new ArrayList<DataItemViewModel>();
 
     public void initData(final Handler mHandler) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GlobalParameterApplication.BaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        TestResultService service = retrofit.create(TestResultService.class);
-        TestResult testResult=new TestResult();
-        testResult.pagesize=90;
-        testResult.curpage=1;
-        Call<Result<DatasWithPageInfo>> repos = service.listRepos(testResult);
+        AssessResultService service = retrofit.create(AssessResultService.class);
+        AssessResult assessResult =new AssessResult();
+        assessResult.pagesize=90;
+        assessResult.curpage=1;
+        Call<Result<DatasWithPageInfo>> repos = service.listRepos(assessResult);
         repos.enqueue(new Callback<Result<DatasWithPageInfo>>() {
             @Override
             public void onResponse(Call<Result<DatasWithPageInfo>> call, Response<Result<DatasWithPageInfo>> response) {
                 try {
                     Result<DatasWithPageInfo> testResultRespond= response.body();
                     if (testResultRespond != null) {
-
-                        testResults=testResultRespond.Data.Datamanagemodels;
+                        for (AssessResult assessResult :testResultRespond.Data.Datamanagemodels) {
+                            DataItemViewModel dateItem=new DataItemViewModel();
+                            dateItem.assessResult = assessResult;
+                            dataItemViewModels.add(dateItem);
+                        }
                         mHandler.sendEmptyMessage(0);
                     }
 

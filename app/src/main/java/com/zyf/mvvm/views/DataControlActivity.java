@@ -5,27 +5,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ListView;
 
 import com.zyf.mvvm.BR;
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.adapter.DataAdapter;
-import com.zyf.mvvm.models.Result;
-import com.zyf.mvvm.models.ScaleSubject;
-import com.zyf.mvvm.models.TestResult;
-import com.zyf.mvvm.net.ParInfoService;
 import com.zyf.mvvm.viewModels.DataControlViewModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.zyf.mvvm.viewModels.DataItemViewModel;
 
 public class DataControlActivity extends AppCompatActivity {
     private DataControlViewModel dataControlViewModel;
@@ -45,8 +31,8 @@ public class DataControlActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
 
-            DataAdapter<TestResult> adapter = new DataAdapter<>(DataControlActivity.this, R.layout.data_control_item,
-                    dataControlViewModel.testResults, BR.testResult);
+            DataAdapter<DataItemViewModel> adapter = new DataAdapter<>(DataControlActivity.this, R.layout.data_control_item,
+                    dataControlViewModel.dataItemViewModels, BR.dataItem);
             lv.setAdapter(adapter);
         }
     };

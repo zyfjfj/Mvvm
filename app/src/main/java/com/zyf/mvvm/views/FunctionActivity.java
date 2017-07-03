@@ -11,11 +11,8 @@ import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.zyf.mvvm.BR;
 import com.zyf.mvvm.R;
-import com.zyf.mvvm.adapter.DataAdapter;
 import com.zyf.mvvm.viewModels.FunctionViewModel;
-import com.zyf.mvvm.viewModels.ParticiantItemViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

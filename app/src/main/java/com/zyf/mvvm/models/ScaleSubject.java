@@ -1,7 +1,6 @@
 package com.zyf.mvvm.models;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by zyf on 2017/6/19.

@@ -8,5 +8,5 @@ import java.util.List;
 
 public class DatasWithPageInfo {
     public PageInfo Pageinfo;
-    public List<TestResult> Datamanagemodels;
+    public List<AssessResult> Datamanagemodels;
 }

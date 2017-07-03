@@ -5,9 +5,11 @@ import android.util.Log;
 
 import com.zyf.mvvm.GlobalParameterApplication;
 import com.zyf.mvvm.models.ParInfoWithPageInfo;
+import com.zyf.mvvm.models.Particiant;
 import com.zyf.mvvm.models.Result;
 import com.zyf.mvvm.net.ParInfoService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ParInfoViewModel {
-    public List<ParticiantItemViewModel> particiantItemViewModels;
+    public List<ParticiantItemViewModel> particiantItemViewModels=new ArrayList<ParticiantItemViewModel>();
 
     public void initData(final Handler mHandler) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -29,10 +31,10 @@ public class ParInfoViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ParInfoService service = retrofit.create(ParInfoService.class);
-        ParticiantItemViewModel particiantItemViewModel =new ParticiantItemViewModel();
-        particiantItemViewModel.pagesize=90;
-        particiantItemViewModel.curpage=1;
-        Call<Result<ParInfoWithPageInfo>> repos = service.pantinfos(particiantItemViewModel);
+        ParInfoWithPageInfo parInfoWithPageInfo =new ParInfoWithPageInfo();
+        parInfoWithPageInfo.pagesize=90;
+        parInfoWithPageInfo.curpage=1;
+        Call<Result<ParInfoWithPageInfo>> repos = service.pantinfos(parInfoWithPageInfo);
         repos.enqueue(new Callback<Result<ParInfoWithPageInfo>>() {
             @Override
             public void onResponse(Call<Result<ParInfoWithPageInfo>> call, Response<Result<ParInfoWithPageInfo>> response) {
@@ -40,7 +42,12 @@ public class ParInfoViewModel {
                     Result<ParInfoWithPageInfo> parInfoRespond= response.body();
                     if (parInfoRespond != null) {
 
-                        particiantItemViewModels =parInfoRespond.Data.Participants;
+                        for (Particiant parInfo:parInfoRespond.Data.Participants) {
+                            ParticiantItemViewModel particintItem=new ParticiantItemViewModel();
+                            particintItem.particiant=parInfo;
+                            particiantItemViewModels.add(particintItem);
+                        }
+
                         mHandler.sendEmptyMessage(0);
                     }
 

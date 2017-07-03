@@ -2,17 +2,17 @@ package com.zyf.mvvm.views;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 
 import com.zyf.mvvm.R;
-import com.zyf.mvvm.viewModels.MainViewModel;
 import com.zyf.mvvm.databinding.ActivityMainBinding;
+import com.zyf.mvvm.viewModels.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

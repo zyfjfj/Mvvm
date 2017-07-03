@@ -3,20 +3,14 @@ package com.zyf.mvvm.viewModels;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
-import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -25,14 +19,9 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.zyf.mvvm.R;
 import com.zyf.mvvm.databinding.ActivityLoginBinding;
-import com.zyf.mvvm.utils.TextWatcherAdapter;
-import com.zyf.mvvm.views.LoginActivity;
 import com.zyf.mvvm.views.MainActivity;
 
 import java.util.List;
-import java.util.Objects;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * Created by zyf on 2017/3/17.
