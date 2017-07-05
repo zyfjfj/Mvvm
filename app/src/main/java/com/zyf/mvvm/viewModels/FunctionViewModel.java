@@ -8,12 +8,14 @@ import com.zyf.mvvm.R;
 import com.zyf.mvvm.models.ProgramControl;
 import com.zyf.mvvm.models.Result;
 import com.zyf.mvvm.net.ProgramControlService;
+import com.zyf.mvvm.net.RetrofitHelper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Subscriber;
 
 /**
  * Created by zyf on 2017/6/28.
@@ -43,38 +45,31 @@ public class FunctionViewModel {
      * @param particpantId
      */
     public void programControl( int functionId, int particpantId) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(GlobalParameterApplication.BaseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ProgramControlService service = retrofit.create(ProgramControlService.class);
         ProgramControl programControl=new ProgramControl();
         programControl.particpantid=particpantId;
         programControl.functionid=functionId;
         programControl.status=1;
-        Call<Result<ProgramControl>> repos = service.listRepos(programControl);
-        repos.enqueue(new Callback<Result<ProgramControl>>() {
-            @Override
-            public void onResponse(Call<Result<ProgramControl>> call, Response<Result<ProgramControl>> response) {
-                try {
-                    Result<ProgramControl> programControlResultRespond= response.body();
-                    if (programControlResultRespond != null) {
-                        ProgramControl pControl=new ProgramControl();
-                        pControl=programControlResultRespond.data;
-                        handler.sendEmptyMessage(1);
-                    }
+        Subscriber<ProgramControl> subscriber = new Subscriber<ProgramControl>(){
 
-                } catch (Exception e) {
-                    handler.sendEmptyMessage(2);
-                    Log.e("===", "return:" + e.getMessage());
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onNext(ProgramControl programControl) {
+                if (programControl != null) {
+                    Log.i(FunctionViewModel.class.getName(),"成功");
+                    handler.sendEmptyMessage(1);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Result<ProgramControl>> call, Throwable t) {
-                handler.sendEmptyMessage(2);
-                Log.e("===", "失败");
             }
-        });
+        };
+        RetrofitHelper.getInstance().setProgramStatus(subscriber,programControl);
     }
 }

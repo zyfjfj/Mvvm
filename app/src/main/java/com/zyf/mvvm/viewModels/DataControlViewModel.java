@@ -4,20 +4,14 @@ import android.databinding.BaseObservable;
 import android.os.Handler;
 import android.util.Log;
 
-import com.zyf.mvvm.GlobalParameterApplication;
 import com.zyf.mvvm.models.AssessResult;
 import com.zyf.mvvm.models.DatasWithPageInfo;
-import com.zyf.mvvm.models.Result;
-import com.zyf.mvvm.net.AssessResultService;
+import com.zyf.mvvm.net.RetrofitHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Subscriber;
 
 /**
  * Created by zyf on 2017/6/26.
@@ -27,39 +21,31 @@ public class DataControlViewModel extends BaseObservable {
     public List<DataItemViewModel> dataItemViewModels=new ArrayList<DataItemViewModel>();
 
     public void initData(final Handler mHandler) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(GlobalParameterApplication.BaseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AssessResultService service = retrofit.create(AssessResultService.class);
-        AssessResult assessResult =new AssessResult();
-        assessResult.pagesize=90;
-        assessResult.curpage=1;
-        Call<Result<DatasWithPageInfo>> repos = service.listRepos(assessResult);
-        repos.enqueue(new Callback<Result<DatasWithPageInfo>>() {
+        Subscriber<DatasWithPageInfo> subscriber=new Subscriber<DatasWithPageInfo>() {
             @Override
-            public void onResponse(Call<Result<DatasWithPageInfo>> call, Response<Result<DatasWithPageInfo>> response) {
-                try {
-                    Result<DatasWithPageInfo> testResultRespond= response.body();
-                    if (testResultRespond != null) {
-                        for (AssessResult assessResult :testResultRespond.Data.Datamanagemodels) {
-                            DataItemViewModel dateItem=new DataItemViewModel();
-                            dateItem.assessResult = assessResult;
-                            dataItemViewModels.add(dateItem);
-                        }
-                        mHandler.sendEmptyMessage(0);
+            public void onCompleted() {
+                Log.i("dataswiht","1111");
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                Log.e("dataswiht","222");
+            }
+
+            @Override
+            public void onNext(DatasWithPageInfo datasWithPageInfo) {
+                if (datasWithPageInfo.Datamanagemodels != null) {
+                    for (AssessResult assessResult :datasWithPageInfo.Datamanagemodels) {
+                        DataItemViewModel dateItem=new DataItemViewModel();
+                        dateItem.assessResult = assessResult;
+                        dataItemViewModels.add(dateItem);
                     }
-
-                } catch (Exception e) {
-                    Log.e("===", "return:" + e.getMessage());
+                    mHandler.sendEmptyMessage(0);
                 }
+                Log.i("dataswiht",datasWithPageInfo.Datamanagemodels.size()+"");
             }
-
-            @Override
-            public void onFailure(Call<Result<DatasWithPageInfo>> call, Throwable t) {
-                Log.e("===", "失败");
-            }
-        });
+        };
+        RetrofitHelper.getInstance().getAssessResults(subscriber,90,1);
     }
 
 }
