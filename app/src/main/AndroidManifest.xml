@@ -41,6 +41,10 @@
         <activity
             android:name=".views.InputInforActivity"
             android:label="@string/title_activity_input_infor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.ScaleActivity"
+            android:label="@string/title_activity_scale"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

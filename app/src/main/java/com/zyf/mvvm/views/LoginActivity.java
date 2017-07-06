@@ -37,11 +37,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private ActivityLoginBinding binding;
     private LoginViewModel loginViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_login);
-        loginViewModel=new LoginViewModel(this,binding);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        loginViewModel = new LoginViewModel(this, binding);
         loginViewModel.mEmail.set("11@1.com");
         loginViewModel.mImage.set("http://img2.cache.netease.com/auto/2016/7/28/201607282215432cd8a.jpg");
         binding.setLoginViewModel(loginViewModel);
@@ -115,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-finish();
+        finish();
         loginViewModel.addEmailsToAutoComplete(emails);
     }
 

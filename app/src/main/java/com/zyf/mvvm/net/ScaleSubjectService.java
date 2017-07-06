@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import rx.Observable;
 
 /**
  * Created by zyf on 2017/6/27.
@@ -14,5 +15,5 @@ import retrofit2.http.GET;
 
 public interface ScaleSubjectService {
     @GET("scalesubject")
-    Call<Result<List<ScaleSubject>>> listRepos();
+    Observable<Result<List<ScaleSubject>>> getScaleSubjects();
 }

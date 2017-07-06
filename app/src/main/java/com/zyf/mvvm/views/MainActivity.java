@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "量表测评":
                         mainViewModel.onClickFriend(view);
+                        intent.setClass(MainActivity.this,ScaleActivity.class);
+                        MainActivity.this.startActivity(intent);
                         break;
                     case "图像测评":
                         break;

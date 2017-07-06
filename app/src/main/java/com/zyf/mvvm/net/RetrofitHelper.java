@@ -6,6 +6,7 @@ import com.zyf.mvvm.models.ParInfoWithPageInfo;
 import com.zyf.mvvm.models.Particiant;
 import com.zyf.mvvm.models.ProgramControl;
 import com.zyf.mvvm.models.Result;
+import com.zyf.mvvm.models.ScaleSubject;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -152,6 +154,25 @@ public class RetrofitHelper {
                     @Override
                     public ProgramControl call(Result<ProgramControl> programControlResult) {
                         return programControlResult.data;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 获取所有的量表测试项目
+     * @param subscriber
+     */
+    public void getScaleSubjects(Subscriber<List<ScaleSubject>> subscriber){
+        ScaleSubjectService service=retrofit.create(ScaleSubjectService.class);
+        service.getScaleSubjects()
+                .map(new Func1<Result<List<ScaleSubject>>, List<ScaleSubject>>() {
+
+                    @Override
+                    public List<ScaleSubject> call(Result<List<ScaleSubject>> listResult) {
+                        return listResult.data;
                     }
                 })
                 .subscribeOn(Schedulers.io())

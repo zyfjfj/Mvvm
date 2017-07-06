@@ -30,4 +30,5 @@
         <item>抑郁情绪</item>
         <item>焦虑抑郁情绪</item>
     </string-array>
+    <string name="title_activity_scale">ScaleActivity</string>
 </resources>

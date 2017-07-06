@@ -29,7 +29,7 @@ import rx.Subscriber;
  * Created by zyf on 2017/6/20.
  */
 
-public class ParticiantItemViewModel extends PageInfo {
+public class ParticiantItemViewModel{
     public Particiant mParticiant;
     public ObservableField<String> keyCodeError = new ObservableField<>();
     public ObservableField<String> nameError = new ObservableField<>();
