@@ -34,7 +34,7 @@ public class ScaleViewModel {
 
             @Override
             public void onError(Throwable e) {
-
+                Log.e("ScaleSubject","",e);
             }
 
             @Override

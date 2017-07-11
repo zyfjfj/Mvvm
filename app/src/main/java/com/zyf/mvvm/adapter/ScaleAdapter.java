@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zyf.mvvm.databinding.ScaleItemBinding;
+import com.zyf.mvvm.databinding.ScaleSubjectItemBinding;
 import com.zyf.mvvm.viewModels.ScaleItemViewModel;
 
 import java.util.ArrayList;

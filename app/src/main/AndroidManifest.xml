@@ -45,6 +45,10 @@
         <activity
             android:name=".views.ScaleActivity"
             android:label="@string/title_activity_scale"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.ScaleSubjectActivity"
+            android:label="@string/title_activity_scale_subject"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -6,6 +6,7 @@ import com.zyf.mvvm.models.ParInfoWithPageInfo;
 import com.zyf.mvvm.models.Particiant;
 import com.zyf.mvvm.models.ProgramControl;
 import com.zyf.mvvm.models.Result;
+import com.zyf.mvvm.models.ScaleItem;
 import com.zyf.mvvm.models.ScaleSubject;
 
 import java.util.List;
@@ -173,6 +174,24 @@ public class RetrofitHelper {
                     @Override
                     public List<ScaleSubject> call(Result<List<ScaleSubject>> listResult) {
                         return listResult.data;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 根据量表id获取题目及答案选项
+     * @param subscriber
+     */
+    public void getItemAnswerByScaleId(Subscriber<List<ScaleItem>> subscriber,int id){
+        ScaleSubjectService service=retrofit.create(ScaleSubjectService.class);
+        service.getItemAnswerByScaleId(id)
+                .map(new Func1<Result<List<ScaleItem>>, List<ScaleItem>>() {
+                    @Override
+                    public List<ScaleItem> call(Result<List<ScaleItem>> scaleItemResult) {
+                        return scaleItemResult.data;
                     }
                 })
                 .subscribeOn(Schedulers.io())
