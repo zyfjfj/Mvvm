@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.startActivity(intent);
                         break;
                     case "图像测评":
+                        intent.setClass(MainActivity.this,ImageActivity.class);
+                        MainActivity.this.startActivity(intent);
                         break;
                     case "信息录入":
                         intent.setClass(MainActivity.this,ParInfoActivity.class);

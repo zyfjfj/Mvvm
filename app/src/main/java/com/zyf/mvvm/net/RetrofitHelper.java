@@ -8,6 +8,7 @@ import com.zyf.mvvm.models.ProgramControl;
 import com.zyf.mvvm.models.Result;
 import com.zyf.mvvm.models.ScaleItem;
 import com.zyf.mvvm.models.ScaleSubject;
+import com.zyf.mvvm.models.Sence;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +39,7 @@ public class RetrofitHelper {
 
     /**
      * 单例模式
+     *
      * @return
      */
     public static RetrofitHelper getInstance() {
@@ -58,9 +60,10 @@ public class RetrofitHelper {
 
     /**
      * 获取测评结果
+     *
      * @param subscriber
-     * @param pageSize 每页数据数量
-     * @param curPage 第几页
+     * @param pageSize   每页数据数量
+     * @param curPage    第几页
      */
     public void getAssessResults(Subscriber<DatasWithPageInfo> subscriber, int pageSize, int curPage) {
         AssessResultService service = retrofit.create(AssessResultService.class);
@@ -81,6 +84,7 @@ public class RetrofitHelper {
 
     /**
      * 根据测试编号获取被试数据
+     *
      * @param subscriber
      * @param KeyCode
      */
@@ -100,10 +104,11 @@ public class RetrofitHelper {
 
     /**
      * 增加被试信息
+     *
      * @param subscriber
      * @param particiant
      */
-    public void addPantInfos(Subscriber<Particiant> subscriber,Particiant particiant){
+    public void addPantInfos(Subscriber<Particiant> subscriber, Particiant particiant) {
         ParInfoService service = retrofit.create(ParInfoService.class);
         service.addPantInfos(particiant)
                 .map(new Func1<Result<Particiant>, Particiant>() {
@@ -119,14 +124,15 @@ public class RetrofitHelper {
 
     /**
      * 获取所有被试信息
+     *
      * @param subscriber
-     * @param pageSize 每页数据数量
-     * @param curPage 第几页
+     * @param pageSize   每页数据数量
+     * @param curPage    第几页
      */
-    public void getpantinfos(Subscriber<ParInfoWithPageInfo> subscriber, int pageSize, int curPage){
-        ParInfoWithPageInfo parInfoWithPageInfo =new ParInfoWithPageInfo();
-        parInfoWithPageInfo.pagesize=pageSize;
-        parInfoWithPageInfo.curpage=curPage;
+    public void getpantinfos(Subscriber<ParInfoWithPageInfo> subscriber, int pageSize, int curPage) {
+        ParInfoWithPageInfo parInfoWithPageInfo = new ParInfoWithPageInfo();
+        parInfoWithPageInfo.pagesize = pageSize;
+        parInfoWithPageInfo.curpage = curPage;
 
         ParInfoService service = retrofit.create(ParInfoService.class);
 
@@ -143,13 +149,13 @@ public class RetrofitHelper {
     }
 
     /**
-     *设置测试状态，用于控制warmhug
+     * 设置测试状态，用于控制warmhug
+     *
      * @param subscriber
-     * @param programControl
-     * Subscriber<ProgramControl> 尖括号里是要返回的数据
+     * @param programControl Subscriber<ProgramControl> 尖括号里是要返回的数据
      */
-    public void setProgramStatus(Subscriber<ProgramControl> subscriber,ProgramControl programControl){
-        ProgramControlService service=retrofit.create(ProgramControlService.class);
+    public void setProgramStatus(Subscriber<ProgramControl> subscriber, ProgramControl programControl) {
+        ProgramControlService service = retrofit.create(ProgramControlService.class);
         service.setProgramStatus(programControl)
                 .map(new Func1<Result<ProgramControl>, ProgramControl>() {
                     @Override
@@ -164,10 +170,11 @@ public class RetrofitHelper {
 
     /**
      * 获取所有的量表测试项目
+     *
      * @param subscriber
      */
-    public void getScaleSubjects(Subscriber<List<ScaleSubject>> subscriber){
-        ScaleSubjectService service=retrofit.create(ScaleSubjectService.class);
+    public void getScaleSubjects(Subscriber<List<ScaleSubject>> subscriber) {
+        ScaleSubjectService service = retrofit.create(ScaleSubjectService.class);
         service.getScaleSubjects()
                 .map(new Func1<Result<List<ScaleSubject>>, List<ScaleSubject>>() {
 
@@ -183,10 +190,11 @@ public class RetrofitHelper {
 
     /**
      * 根据量表id获取题目及答案选项
+     *
      * @param subscriber
      */
-    public void getItemAnswerByScaleId(Subscriber<List<ScaleItem>> subscriber,int id){
-        ScaleSubjectService service=retrofit.create(ScaleSubjectService.class);
+    public void getItemAnswerByScaleId(Subscriber<List<ScaleItem>> subscriber, int id) {
+        ScaleSubjectService service = retrofit.create(ScaleSubjectService.class);
         service.getItemAnswerByScaleId(id)
                 .map(new Func1<Result<List<ScaleItem>>, List<ScaleItem>>() {
                     @Override
@@ -197,5 +205,22 @@ public class RetrofitHelper {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+    }
+
+
+    public void getSences(Subscriber<List<Sence>> subscriber, Sence.Ids ids) {
+        ImageService service = retrofit.create(ImageService.class);
+        service.getImages(ids)
+                .map(new Func1<Result<List<Sence>>, List<Sence>>() {
+
+                    @Override
+                    public List<Sence> call(Result<List<Sence>> listResult) {
+                        return listResult.data;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
     }
 }

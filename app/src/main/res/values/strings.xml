@@ -32,4 +32,5 @@
     </string-array>
     <string name="title_activity_scale">ScaleActivity</string>
     <string name="title_activity_scale_subject">ScaleSubjectActivity</string>
+    <string name="title_activity_image">ImageActivity</string>
 </resources>
