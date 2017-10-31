@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.zyf.mvvm.GlobalParameterApplication;
 import com.zyf.mvvm.databinding.ActivityImageBinding;
+import com.zyf.mvvm.models.Particiant;
 import com.zyf.mvvm.models.Sence;
 import com.zyf.mvvm.net.RetrofitHelper;
 import com.zyf.mvvm.utils.FileOper;
@@ -61,7 +62,6 @@ public class ImageViewModel {
                 for (Sence sence : sences) {
                     Log.i("sence",sence.Name);
                     FileOper.generateImage(sence.Name,sence.Data);
-                    //generateImage(sence.Data,);
                     mImageName.add(sence.Name);
                 }
             }
